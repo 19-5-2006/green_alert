@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: #f0f8ff;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .navbar {
+      margin-bottom: 30px;
+    }
+    .card {
+      margin-bottom: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .card img {
+      max-height: 200px;
+      object-fit: cover;
+    }
+    .logout-btn {
+      position: absolute;
+      right: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-success">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Green Alert</a>
+    <div class="logout-btn">
+      <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <h3 class="mb-4">Welcome, {{ user_name }}! 👋</h3>
+
+  <!-- Complaint Form -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5 class="card-title">Submit a New Complaint</h5>
+      <form action="{{ url_for('add_complaint') }}" method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" class="form-control" name="title" id="title" required>
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea class="form-control" name="description" id="description" rows="3" required></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="location" class="form-label">Location</label>
+          <input type="text" class="form-control" name="location" id="location" required>
+        </div>
+        <div class="mb-3">
+          <label for="image" class="form-label">Image (optional)</label>
+          <input type="file" class="form-control" name="image" id="image" accept="image/*">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Complaint</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Complaints List -->
+  {% if complaints %}
+    <div class="row">
+      {% for complaint in complaints %}
+      <div class="col-md-6">
+        <div class="card">
+          {% if complaint.image %}
+           <img src="{{ url_for('static', filename='uploads/' + complaint.image) }}" class="card-img-top" alt="Complaint Image">
+
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ complaint.title }}</h5>
+            <p class="card-text">{{ complaint.description }}</p>
+            <p><strong>Location:</strong> {{ complaint.location }}</p>
+            <p><strong>Status:</strong> 
+              {% if complaint.status == "Resolved" %}
+                <span class="badge bg-success">{{ complaint.status }}</span>
+              {% elif complaint.status == "In Progress" %}
+                <span class="badge bg-warning text-dark">{{ complaint.status }}</span>
+              {% else %}
+                <span class="badge bg-secondary">{{ complaint.status }}</span>
+              {% endif %}
+            </p>
+            <a href="{{ url_for('delete_complaint', complaint_id=complaint.id) }}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure you want to delete this complaint?');">Delete</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No complaints submitted yet. Fill out the form above to get started.</p>
+  {% endif %}
+
+</div>
+
+</body>
+</html>

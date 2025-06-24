@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Alert - Environmental Reporting</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0fff4;
+        }
+
+        header {
+            background-color: #2e8b57;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 48px;
+            margin: 0;
+        }
+
+        header p {
+            font-size: 20px;
+            margin-top: 10px;
+            font-style: italic;
+        }
+.hero{
+  position: relative;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.hero-image {
+  display: block;
+  margin: 40px auto 0 auto;
+  max-width: 100%;
+  height: auto;
+  
+}
+
+.hero-section h1 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+        .buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 40px 0;
+        }
+
+        .buttons a {
+            text-decoration: none;
+            background-color: #228B22;
+            color: white;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 10px;
+            font-size: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .buttons a:hover {
+            background-color: #1c6f1c;
+        }
+
+        footer {
+            background-color: #2e8b57;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 30px;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Green Alert</h1>
+        <p>“Be the change you wish to see in the world.” – Mahatma Gandhi</p>
+    </header>
+
+    <div class="hero">
+        <img src="{{ url_for('static', filename='back.jpg') }}" alt="Environmental Awareness Banner">
+        <div class="hero-text">
+            <h2>Join the Movement to Protect Our Planet</h2>
+        </div>
+    </div>
+
+    <div class="buttons">
+        <a href="{{ url_for('login') }}">👤 User Login</a>
+        <a href="{{ url_for('admin_login') }}">🛡️ Admin Login</a>
+        <a href="{{ url_for('register') }}">📝 Register</a>
+    </div>
+
+    <footer>
+        Contact us at: <a href="mailto:support@greenalert.org">support@greenalert.org</a> |
+        Phone: +91-9876543210
+    </footer>
+
+</body>
+</html>
